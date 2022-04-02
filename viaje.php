@@ -50,7 +50,8 @@
         { $retorno = false;}
         else {$retorno=true;}
         return $retorno;}
-        
+
+    //metodo para eliminar pasajero
     public function eliminarPasajero($pasajero){
         $retorno = false;
         $array = $this->getPasajeros();
@@ -62,15 +63,16 @@
             $retorno = true;
         }//si fue eliminado correctamente retornamos un valor booleano true
         return $retorno; }
-       //Metodo para modificar los datos de un pasajero
+
+    //funcion para modificar pasajero
     public function modificarPasajero($pasajero,$pasajeroNuevo)
-    { $arrayModificado = $this->getPasajeros();
-      if(in_array($pasajero, $arrayModificado))
-      {         $key = array_search($pasajero, $arrayModificado );
+    {       $arrayModificado = $this->getPasajeros();
+            if(in_array($pasajero, $arrayModificado)){            
+                $key = array_search($pasajero, $arrayModificado );
                 $arrayModificado[$key] = $pasajeroNuevo;
                 $this->setPasajeros($arrayModificado);            
                 $retorno = true; }
-      else{$retorno=false;}
+            else{$retorno=false;}
             return $retorno;}
 
     /**Metodo para hacer un string de ls pasajeros*/
@@ -102,3 +104,4 @@
 
 }   
   }
+  ?>
