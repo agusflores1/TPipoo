@@ -2,6 +2,7 @@
 include "viaje.php";
 echo "\n BIENVENIDO A VIAJE FELIZ \n
 Ingrese los datos del viaje:  \n";
+echo "------------------------\n";
 echo "Ingrese codigo de viaje: \n ";
 $codigo=trim(fgets(STDIN));
 echo "Ingrese destino: \n ";
@@ -27,11 +28,18 @@ case 1 :
         if($objViaje->disponibilidadLugar()==true)
         {$pasajero = recogerDatos();
         if($objViaje->agregarPasajero($pasajero)==false){
-        echo "Pasajero agregado con exito.\n";}
-        else{echo "El pasajero ya se encuentra en el viaje.\n";}
+        echo "-------------------------------------------\n".
+             "Pasajero agregado con exito.\n".
+             "-------------------------------------------\n";}
+        else
+        {    echo "-------------------------------------------\n".
+             "**El pasajero ya se encuentra en el viaje.**\n".
+             "-------------------------------------------\n";}
         }
         else
-        {echo "No hay mas lugares en este viaje.\n";}            
+        {   echo "-------------------------------------------\n".
+                 "No hay mas lugares en este viaje.\n".
+                 "-------------------------------------------\n";}            
         break;
   
 case 2 :
@@ -39,19 +47,27 @@ case 2 :
         $pasajero = recogerDatos();
         //luego de recoger los datos, eliminamos y verificamos que sus datos hayan sido borrados
         if($objViaje->eliminarPasajero($pasajero))
-        {echo "El pasajero ha sido borrado con exito.\n";}
+        {echo "-------------------------------------------\n".
+              "El pasajero ha sido borrado con exito.\n".
+              "-------------------------------------------\n";}
         else
-        {echo "No se ha encontrado al pasajero.\n";}
+        {echo "-------------------------------------------\n".
+              "No se ha encontrado al pasajero.\n".
+              "-------------------------------------------\n";}
         break;
 
 case 3 :
-      echo "Ingrese los datos del pasajero que quiere modificar: ";
+      echo "Ingrese los datos del pasajero que quiere modificar: \n";
       $pasajero=recogerDatos();
-      echo "Ingrese los datos del pasajero nuevo: ";
+      echo "Ingrese los datos del pasajero nuevo: \n";
       $pasajero2=recogerDatos();
-      if($objViaje->modificarPasajero($pasajero, $pasajero2)==true){
-        echo "Se han modificado los datos.\n";}
-     else{echo "No se ha encontrado al pasajero.\n";}
+      if($objViaje->modificarPasajero($pasajero, $pasajero2)==true)
+      { echo "-------------------------------------------\n".
+             "Se han modificado los datos.\n".
+             "-------------------------------------------\n";}
+     else{echo "-------------------------------------------\n".
+               "No se ha encontrado al pasajero.\n".
+               "-------------------------------------------\n";}
      break;
 
 case 4 :
@@ -91,7 +107,7 @@ case 7 :
 
 //FUNCION QUE RECOGE LOS DATOS
 function recogerDatos()
-{  echo "INGRESE DATOS: \n " ;
+{ 
      echo "Ingrese Nombre del pasajero: \n";
     $nombrePasajero=trim(fgets(STDIN));
     echo "Ingrese apellido del pasajero: \n";
