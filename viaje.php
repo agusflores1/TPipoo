@@ -5,12 +5,16 @@
       private $destino ;
       private $cantMax;
       private $cantidadPasajeros=0;
-      private $arrayPasajeros=[];
+      private $arrayPasajeros;
+      private $responsableV;
 
-      public function __construct($codigoViaje,$destino,$cantMax)
+      public function __construct($codigoViaje,$destino,$cantMax,$responsableV,$arrayPasajeros)
       {  $this->codigoViaje=$codigoViaje ;
         $this->destino=$destino;
-        $this->cantMax=$cantMax ; }
+        $this->cantMax=$cantMax;
+        $this->responsableV=$responsableV;
+        $this->arrayPasajeros=$arrayPasajeros ;
+        }
 
       public function getCodigoViaje()
       {return $this->codigoViaje;}
@@ -27,13 +31,18 @@
       public function setCantMax($var)
       {$this->cantMax=$var;}
  
+      public function getResponsable()
+      {return $this->responsableV;}
+      public function setResponsable($nuevoResponsable)
+      {$this->responsableV=$nuevoResponsable;}
+
       public function getPasajeros()
       {return $this->arrayPasajeros;}
       public function setPasajeros($arrayPasajero)
       {$this->arrayPasajeros=$arrayPasajero;}
 
  
-       //Metodo para agregar pasajero
+       /*Metodo para agregar pasajero
      public function agregarPasajero($pasajero)
         { $arrayNuevo=$this->getPasajeros();
         if(in_array($pasajero, $this->getPasajeros()))
@@ -43,6 +52,29 @@
          $this->setPasajeros($arrayNuevo);
         $rta=false;}
       return $rta;}
+*/
+
+ //Metodo para agregar pasajero sin array push y in array :)
+     public function agregarPasajero($pasajeroNuevo)
+     { $arrayPasajeros=$this->getPasajeros();
+      $maxCantidad = $this->getCantMax();
+      $rta = false;
+ for ($i = 0; $i < count($arrayPasajeros); $i++)
+    {
+      $pasajero = $arrayPasajeros[$i];
+      if ($pasajeroNuevo == $pasajero)
+      { $rta = true; }
+      }
+      if ($rta == false)
+      {
+      $arrayPasajeros[count($arrayPasajeros)] = $pasajeroNuevo; 
+      $this->setPasajeros($arrayPasajeros);
+     }
+   return $rta;}
+ 
+
+
+
 
      /**Metodo para saber si se puede agregar mas personas */
     public function disponibilidadLugar()
@@ -75,33 +107,41 @@
             else{$retorno=false;}
             return $retorno;}
 
-    /**Metodo para hacer un string de ls pasajeros*/
-    private function pasajerosString(){
-             $strPasajeros = "";
-        foreach ($this->getPasajeros() as $key => $value) {
-            $nombre = $value['nombre'];
-            $apellido = $value['apellido'];
-            $dni = $value['DNI'];
-            $strPasajeros .= "
-            Nombre: $nombre.\n
-            Apellido: $apellido.\n
-            DNI: $dni.\n";
-        }
-        return $strPasajeros;
-    }
          //toString
     public function __toString(){
-        $pasajeros = $this->pasajerosString();
+
         $arrayPasajeros = $this->getPasajeros();
         $cantidad = count($arrayPasajeros);
+        $stringPasasjeros=$this->pasajerosString();
         $str = "
+        DATOS VIAJE: \n
         Viaje: {$this->getCodigoViaje()}.\n
         Destino: {$this->getDestino()}.\n
         Cantidad de Asientos: {$this->getCantMax()}.\n
-        Asientos ocupados: $cantidad.\n
-        Datos de Pasajeros: \n $pasajeros";
+        Asientos ocupados: $cantidad.\n".
+        "\nDatos Responsable: ".$this->getResponsable(). "\n".
+       "\nDatos de Pasajeros:".$stringPasasjeros." \n";
         return $str;
 
 }   
+
+ /**Metodo para hacer un string de ls pasajeros*/
+ private function pasajerosString(){
+    $strPasajeros = "";
+foreach ($this->getPasajeros() as $key => $value) {
+   $nombre = $value->getNombre();
+   $apellido = $value->getApellido();
+   $dni = $value->getDNI();
+   $telefono = $value->getTelefono();
+
+   $strPasajeros .= 
+   "\n Nombre: "  .  $nombre .
+   "\n Apellido: ". $apellido.
+   "\n DNI: ". $dni.
+   "\n Telefono: ".$telefono."\n";
+}
+return $strPasajeros;
   }
+
+}
   ?>
