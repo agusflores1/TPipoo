@@ -1,5 +1,10 @@
 <?php
 include "viaje.php";
+include "pasajero.php";
+include "responsableV.php";
+
+$arrayPasajeros=[];
+
 echo "\n BIENVENIDO A VIAJE FELIZ \n
 Ingrese los datos del viaje:  \n";
 echo "------------------------\n";
@@ -9,7 +14,9 @@ echo "Ingrese destino: \n ";
 $destino=trim(fgets(STDIN));
 echo "Ingrese cantidad maxima de pasajeros: \n ";
 $cantMax=trim(fgets(STDIN));
-$objViaje=new viaje($codigo,$destino,$cantMax);
+echo "DATOS EMPLEADO RESPONSABLE DE VIAJE:  \n";
+$objResponsableV=ingresarDatosEmpleado();
+$objViaje=new viaje($codigo,$destino,$cantMax,$objResponsableV,$arrayPasajeros);
 
 do{
 echo "MENU. \n
@@ -19,8 +26,9 @@ echo "MENU. \n
 4. Modificar el código del viaje.\n
 5. Modificar el destino del viaje.\n
 6. Modificar la cantidad de asientos del viaje. \n
-7. Ver viaje. \n
-8. Salir. \n"; ;
+7. Modificar datos del Responsable de viaje. \n
+8. Ver viaje. \n
+9. Salir. \n"; ;
 $rta=trim(fgets(STDIN));
  switch($rta)
 { 
@@ -93,20 +101,26 @@ case 6 :
         echo "la nueva cantidad es: ".$objViaje->getCantMax() ."\n";
         break;
 
+
 case 7 :
+       $nuevoEmpleado=ingresarDatosEmpleado();
+       $objViaje->setResponsable($nuevoEmpleado);
+         break;
+
+case 8 :
         echo $objViaje;
         break;
 
     
 }
-} while($rta<>8);
+} while($rta<>9);
 
 
 
 /*FUNCIONES*/
 
 //FUNCION QUE RECOGE LOS DATOS
-function recogerDatos()
+ function recogerDatos()
 { 
      echo "Ingrese Nombre del pasajero: \n";
     $nombrePasajero=trim(fgets(STDIN));
@@ -114,8 +128,25 @@ function recogerDatos()
     $apellidoPasajero=trim(fgets(STDIN));
     echo "Ingrese dni del pasajero: \n";
     $dniPasajero=trim(fgets(STDIN));
-    $arrayAsociativo=["nombre"=>$nombrePasajero,"apellido"=>$apellidoPasajero,"DNI"=>$dniPasajero];
-    return $arrayAsociativo;
+    echo "Ingrese numero de telefono: \n";
+    $telefono=trim(fgets(STDIN));
+    $objPasajero=new Pasajero($nombrePasajero,$apellidoPasajero,$dniPasajero,$telefono);
+    return $objPasajero;
 }
 
+ function ingresarDatosEmpleado()
+{   echo "Ingrese Nombre: \n";
+    $nombreEmpleado= trim(fgets(STDIN));
+    echo "Ingrese Apellido : \n";
+    $apellidoEmpleado= trim(fgets(STDIN));
+    echo "Ingrese Numero de Empleado: \n";
+    $numeroEmpleado= trim(fgets(STDIN));
+    echo "Ingrese numero de Licencia: \n";
+    $numeroLicencia= trim(fgets(STDIN));
+    $objResponsableV=new responsableV($numeroEmpleado,$numeroLicencia,$nombreEmpleado,$apellidoEmpleado);
+   return $objResponsableV;
+    
+
+
+}
 ?>
