@@ -7,14 +7,19 @@
       private $cantidadPasajeros=0;
       private $arrayPasajeros;
       private $responsableV;
+      private $importe;
+      private $tipoViaje;
 
-      public function __construct($codigoViaje,$destino,$cantMax,$responsableV,$arrayPasajeros)
+      public function __construct($codigoViaje,$destino,$cantMax,$responsableV,$arrayPasajeros,$importe,$tipoViaje)
       {  $this->codigoViaje=$codigoViaje ;
         $this->destino=$destino;
         $this->cantMax=$cantMax;
         $this->responsableV=$responsableV;
         $this->arrayPasajeros=$arrayPasajeros ;
-        }
+
+        $this->importe=$importe;
+        $this->tipoViaje=$tipoViaje; 
+      }
 
       public function getCodigoViaje()
       {return $this->codigoViaje;}
@@ -41,18 +46,24 @@
       public function setPasajeros($arrayPasajero)
       {$this->arrayPasajeros=$arrayPasajero;}
 
- 
-       /*Metodo para agregar pasajero
-     public function agregarPasajero($pasajero)
-        { $arrayNuevo=$this->getPasajeros();
-        if(in_array($pasajero, $this->getPasajeros()))
-        {$rta = true;}
-        else
-        {array_push($arrayNuevo, $pasajero);
-         $this->setPasajeros($arrayNuevo);
-        $rta=false;}
-      return $rta;}
-*/
+
+ //TP3
+public function getPrecioPasaje()
+{return $this->importe;}
+
+public function setPrecioPasaje($nuevo)
+{ $this->importe=$nuevo;}
+
+public function getTipoViaje()
+{return $this->tipoViaje;}
+
+public function setTipoViaje($nuevo)
+{ $this->tipoViaje=$nuevo;}
+
+
+
+
+
 
  //Metodo para agregar pasajero sin array push y in array :)
      public function agregarPasajero($pasajeroNuevo)
@@ -71,9 +82,6 @@
       $this->setPasajeros($arrayPasajeros);
      }
    return $rta;}
- 
-
-
 
 
      /**Metodo para saber si se puede agregar mas personas */
@@ -120,7 +128,9 @@
         Cantidad de Asientos: {$this->getCantMax()}.\n
         Asientos ocupados: $cantidad.\n".
         "\nDatos Responsable: ".$this->getResponsable(). "\n".
-       "\nDatos de Pasajeros:".$stringPasasjeros." \n";
+        "\nDatos de Pasajeros:".$stringPasasjeros." \n".
+        "Precio: ".$this->getPrecioPasaje()."\n".
+        "Tipo de Viaje: ".$this->getTipoViaje()."\n";
         return $str;
 
 }   
@@ -139,9 +149,40 @@ foreach ($this->getPasajeros() as $key => $value) {
    "\n Apellido: ". $apellido.
    "\n DNI: ". $dni.
    "\n Telefono: ".$telefono."\n";
+  
 }
 return $strPasajeros;
   }
 
+
+//TP N 3
+  public function hayPasajesDisponibles()
+  { { if(count($this->getPasajeros()) >= $this->getCantMax())
+    { $retorno = false;}
+    else {$retorno=true;}
+    return $retorno;}}
+
+
+public function venderPasaje($pasajero)
+{$arrayPasajeros=$this->getPasajeros();
+ if($this->hayPasajesDisponibles())
+  {
+    $this->agregarPasajero($pasajero); 
+  }
 }
+          
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
   ?>
